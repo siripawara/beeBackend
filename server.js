@@ -1,6 +1,6 @@
 const express = require('express')
 const db = require("./config")
-const { collection, addDoc,getDocs,serverTimestamp ,query,where, orderBy} =  require("firebase/firestore");
+const { collection, addDoc,getDocs,updateDoc,doc,serverTimestamp ,query,where, orderBy,limit} =  require("firebase/firestore");
 const app = express()
 app.use(express.urlencoded({extended:true}))
 
@@ -21,10 +21,29 @@ app.get('/:temp/:humidity',async (req,res)=>{
       }
 })
 
+// //send live data
+// app.get("/updatelive/:temp/:humidity",async(req,res)=>{
+//     const docRef = doc(db,'sensorlive','0001')
+//     try {
+//         await updateDoc(docRef,{
+//             temp:req.params.temp,
+//             humidity : req.params.humidity,
+//         })
+//         res.status(200).send("Live data Updated")
+//     } catch (error) {
+//         console.log("error with live data overWrite")
+//         res.status(400).send(error)
+//     }
+
+
+    
+// })
+
+
 //get live data
 app.get("/live",async(req,res)=>{
     const colRef = collection(db, "sensor");
-    const q = query(colRef,orderBy('date','desc'))
+    const q = query(colRef,orderBy('date','desc'),limit(2))
     try {
         const docsSnap = await getDocs(q);
         const arr = []
