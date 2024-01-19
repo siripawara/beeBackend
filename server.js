@@ -5,12 +5,13 @@ const app = express()
 app.use(express.urlencoded({extended:true}))
 
 //send data to db
-app.get('/:temp/:humidity',async (req,res)=>{
+app.get('/:temp/:humidity/:weight',async (req,res)=>{
     console.log("siri")
     try {
         const docRef = await addDoc(collection(db, "sensor"), {
           temp:req.params.temp,
           humidity : req.params.humidity,  
+          weight : req.params.weight, 
           date: serverTimestamp(),    
         });
         console.log("Document written with ID: ", docRef.id);
