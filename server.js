@@ -2,8 +2,9 @@ const express = require('express')
 const db = require("./config")
 const { collection, addDoc,getDocs,updateDoc,doc,serverTimestamp ,query,where, orderBy,limit} =  require("firebase/firestore");
 const app = express()
+var cors = require('cors')
 app.use(express.urlencoded({extended:true}))
-
+app.use(cors())
 //send data to db
 app.get('/:temp/:humidity/:weight',async (req,res)=>{
     console.log("siri")
@@ -77,5 +78,5 @@ app.get('/data', async(req,res)=>{
     }
 })
 
-app.listen(3000,()=>console.log("listen on port 300"))
+app.listen(3000,()=>console.log("listen on port 3000"))
 
