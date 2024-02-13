@@ -103,6 +103,7 @@ app.get("/data2", async (req, res) => {
     "weight":(data.weight),
     "date":dateConvert(data).getHours()
   })})
+  console.log(dataArrFinal)
   res.json(dataArrFinal)
 });
 app.listen(3000, () => console.log("listen on port 3000"));
