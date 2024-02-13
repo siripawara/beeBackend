@@ -101,7 +101,7 @@ app.get("/data2", async (req, res) => {
     "temp":parseInt(data.temp),
     "humidity":parseInt(data.humidity),
     "weight":(data.weight),
-    "date":dateConvert(data).getHours()
+    "date":dateConvert(data).getHours()+5
   })})
   console.log(dataArrFinal)
   res.json(dataArrFinal)
@@ -110,5 +110,6 @@ app.listen(3000, () => console.log("listen on port 3000"));
 
 const dateConvert = (date) => {
   let ts = (date.date.seconds + date.date.nanoseconds / 1000000000) * 1000;
+  console.log(new Date(ts).toLocaleString("en-US",{timeZone: "Asia/Jakarta"}))
   return new Date(ts);
 };
