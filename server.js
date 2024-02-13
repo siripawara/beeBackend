@@ -75,13 +75,12 @@ app.get("/data2", async (req, res) => {
   const colRef = collection(db, "sensor");
   const q = query(colRef, orderBy("date", "desc"), limit(1));
   let dataArr = [];
-  let dataArrFinal = [];
   let lastDate;
   try {
     const docsSnap = await getDocs(q);
     lastDate = dateConvert(docsSnap.docs[0].data());
-    lastDate.setMinutes(0)
-    dataArr.push(docsSnap.docs[0].data())
+    lastDate.setMinutes(0);
+    dataArr.push(docsSnap.docs[0].data());
   } catch (error) {
     res.status(400).send(error);
     console.log(error);
@@ -97,19 +96,12 @@ app.get("/data2", async (req, res) => {
     const docsSnap2 = await getDocs(q2);
     dataArr.push(docsSnap2.docs[0].data());
   }
-  dataArr.map((data)=>{dataArrFinal.push({
-    "temp":parseInt(data.temp),
-    "humidity":parseInt(data.humidity),
-    "weight":(data.weight),
-    "date":dateConvert(data).getHours()+5
-  })})
-  console.log(dataArrFinal)
-  res.json(dataArrFinal)
+
+  res.json(dataArr.reverse());
 });
 app.listen(3000, () => console.log("listen on port 3000"));
 
 const dateConvert = (date) => {
   let ts = (date.date.seconds + date.date.nanoseconds / 1000000000) * 1000;
-  console.log(new Date(ts).toLocaleString("en-US",{timeZone: "Asia/Jakarta"}))
   return new Date(ts);
 };
