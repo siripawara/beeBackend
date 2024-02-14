@@ -97,7 +97,7 @@ app.get("/data2", async (req, res) => {
     dataArr.push(docsSnap2.docs[0].data());
   }
 
-  res.json(dataArr.reverse());
+  res.json(dataArr.reverse()).status(200);
 });
 app.listen(3000, () => console.log("listen on port 3000"));
 
